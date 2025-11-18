@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My Movie Collection</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    button {
+      margin: 5px;
+      padding: 10px 15px;
+      cursor: pointer;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+    .movie {
+      background: white;
+      margin: 10px 0;
+      padding: 15px;
+      border-radius: 8px;
+      border-left: 6px solid #0077cc;
+    }
+    .classic {
+      border-left: 6px solid gold;
+    }
+    .badge {
+      background: gold;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      margin-left: 10px;
+      color: black;
+    }
+    h1{
+      color: #0077cc;
+      font-size: 24px;
+      text-align: center;
+      margin-bottom: 20px;
+      font-weight: bold;
+      font-family: 'Georgia', serif;
+
+      background-color: aquamarine;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+    p{
+      color: #0077cc
+      
+     
+    }
+  </style>
+</head>
+<body>
+
+  <h1>MovieMania</h1>
+
+  <button onclick="fetchAllMovies()">View All Movies</button>
+  <button onclick="fetchClassicMovies()">View Classic Movies</button>
+  <button onclick="fetchGenres()">View Genres</button>
+
+  <div id="output"></div>
+
+  <script>
+    async function fetchAllMovies() {
+      try {
+        const res = await fetch('/movies');
+        const movies = await res.json();
+        displayMovies(movies);
+      } catch (err) {
+        showError(err);
+      }
+    }
+
+    async function fetchClassicMovies() {
+      try {
+        const res = await fetch('/movies/classics');
+        const movies = await res.json();
+        displayMovies(movies);
+      } catch (err) {
+        showError(err);
+      }
+    }
+
+    async function fetchGenres() {
+      try {
+        const res = await fetch('/movies/genres');
+        const data = await res.json();
+        const list = data.genres
+          .map(g => `<p><strong>${g.name}</strong>: ${g.movieCount} movies</p>`)
+          .join('');
+        document.getElementById('output').innerHTML = list;
+      } catch (err) {
+        showError(err);
+      }
+    }
+
+    function displayMovies(movies) {
+      const html = movies.map(m => `
+        <div class="movie ${m.isClassic ? 'classic' : ''}">
+          <h3>${m.title} ${m.isClassic ? '<span class="badge">Classic</span>' : ''}</h3>
+          <p><strong>Genre:</strong> ${m.genre}</p>
+          <p><strong>Release Year:</strong> ${m.releaseYear}</p>
+          <p><strong>Director:</strong> ${m.director}</p>
+        </div>
+      `).join('');
+
+      document.getElementById('output').innerHTML = html;
+    }
+
+    function showError(err) {
+      document.getElementById('output').innerHTML = "<p style='color:red;'>Error fetching data.</p>";
+    }
+  </script>
+
+</body>
+</html>
