@@ -91,7 +91,7 @@ Sample Response:
 
 🛠 Installation & Setup Instructions
 1. Clone the repository
-git clone https://github.com/hamzaraseel7/MovieCollection.git
+git clone https://github.com/nikedh17/Movie-collection.git
 
 2. Navigate into the project
 cd movie-collection-api
@@ -124,10 +124,10 @@ http://localhost:3000/
 ✔ Clean project structure
 
 🔗 GitHub Repository Link
-https://github.com/hamzaraseel7/MovieCollection
+https://github.com/nikedh17/Movie-collection.git
 
 👉 Add your actual GitHub repo URL here
 
 👤 Author
 
-Hamza Muhammed Raseel
+Nikedh
